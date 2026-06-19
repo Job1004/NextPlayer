@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>넥스트플레이어 | 관리자 대시보드</title>
+<style>
+:root{--blue:#1F4E79;--blue-mid:#2E75B6;--gold:#C9A84C;--gray:#666;--light:#F5F7FA;--white:#fff;--red:#C00000;--green:#375623}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--light);color:#2D2D2D;min-height:100vh}
+
+/* ── 로그인 화면 ── */
+#loginWrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0a1e30,#1F4E79)}
+.login-box{background:#fff;border-radius:16px;padding:48px 40px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center}
+.login-logo{font-size:1.5rem;font-weight:900;color:var(--blue);margin-bottom:6px}.login-logo span{color:var(--gold)}
+.login-sub{font-size:.85rem;color:var(--gray);margin-bottom:32px}
+.login-box input{width:100%;padding:12px 14px;border:1.5px solid #D0DFF0;border-radius:8px;font-size:.95rem;font-family:inherit;margin-bottom:12px;transition:border-color .2s}
+.login-box input:focus{outline:none;border-color:var(--blue-mid)}
+.login-btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
+.login-btn:hover{background:var(--blue-mid)}
+.login-err{display:none;color:var(--red);font-size:.83rem;margin-top:10px}
+
+/* ── 대시보드 ── */
+#dashboard{display:none}
+.topbar{background:var(--blue);color:#fff;padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topbar-logo{font-size:1rem;font-weight:800}.topbar-logo span{color:var(--gold)}
+.topbar-right{display:flex;align-items:center;gap:16px;font-size:.85rem}
+.logout-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.83rem;font-family:inherit}
+.logout-btn:hover{background:rgba(255,255,255,.25)}
+
+.dash-inner{max-width:1200px;margin:0 auto;padding:32px 5%}
+
+/* 요약 카드 */
+.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+@media(max-width:768px){.summary-row{grid-template-columns:repeat(2,1fr)}}
+.sum-card{background:#fff;border-radius:12px;padding:22px 20px;box-shadow:0 2px 12px rgba(31,78,121,.08);border-top:4px solid var(--blue)}
+.sum-card.gold{border-top-color:var(--gold)}
+.sum-card.green{border-top-color:#2E8B57}
+.sum-card.purple{border-top-color:#7B4FAB}
+.sum-label{font-size:.78rem;color:var(--gray);font-weight:600;margin-bottom:6px}
+.sum-num{font-size:2rem;font-weight:900;color:var(--blue)}
+.sum-card.gold .sum-num{color:var(--gold)}
+.sum-card.green .sum-num{color:#2E8B57}
+.sum-card.purple .sum-num{color:#7B4FAB}
+
+/* 탭 */
+.tabs{display:flex;gap:0;border-bottom:2px solid #D0DFF0;margin-bottom:24px}
+.tab-btn{padding:12px 28px;font-size:.92rem;font-weight:600;color:var(--gray);background:none;border:none;cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* 툴바 */
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.search-box{padding:8px 14px;border:1.5px solid #D0DFF0;border-radius:8px;font-size:.88rem;font-family:inherit;width:240px}
+.search-box:focus{outline:none;border-color:var(--blue-mid)}
+.btn-refresh{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px}
+.btn-refresh:hover{background:var(--blue-mid)}
+.btn-export{background:#2E8B57;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-export:hover{background:#256B45}
+
+/* 테이블 */
+.table-wrap{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(31,78,121,.08);overflow:hidden}
+.data-table{width:100%;border-collapse:collapse;font-size:.86rem}
+.data-table th{background:var(--blue);color:#fff;padding:12px 14px;text-align:left;font-weight:600;font-size:.82rem;white-space:nowrap}
+.data-table td{padding:12px 14px;border-bottom:1px solid #EEF4FB;color:#2D2D2D;vertical-align:top}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:#F7FAFF}
+.data-table td:first-child{color:var(--gray);font-size:.78rem;white-space:nowrap}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+.badge-a{background:#EEF4FB;color:var(--blue-mid)}
+.badge-b{background:#FFF8EE;color:#9A6E1A}
+.badge-c{background:#F0FAF4;color:#2E8B57}
+.badge-d{background:#F7F0FB;color:#7B4FAB}
+
+/* 상태 */
+.loading-msg{text-align:center;padding:48px;color:var(--gray);font-size:.9rem}
+.empty-msg{text-align:center;padding:48px;color:var(--gray)}
+.error-msg{text-align:center;padding:48px;color:var(--red)}
+
+/* 설정 안내 배너 */
+.setup-banner{background:#FFF8E1;border:1.5px solid var(--gold);border-radius:10px;padding:18px 22px;margin-bottom:24px;font-size:.875rem;line-height:1.7;display:none}
+.setup-banner strong{color:var(--blue)}
+.setup-banner code{background:#EEE;padding:2px 6px;border-radius:4px;font-size:.82rem}
+</style>
+</head>
+<body>
+
+<!-- ════ 로그인 화면 ════ -->
+<div id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">Next<span>Player</span></div>
+    <div class="login-sub">관리자 전용 대시보드</div>
+    <input type="password" id="pwInput" placeholder="관리자 비밀번호 입력" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <div class="login-err" id="loginErr">⚠️ 비밀번호가 올바르지 않습니다.</div>
+  </div>
+</div>
+
+<!-- ════ 대시보드 ════ -->
+<div id="dashboard">
+  <div class="topbar">
+    <div class="topbar-logo">Next<span>Player</span> <span style="font-size:.75rem;opacity:.7;font-weight:400;margin-left:8px">관리자</span></div>
+    <div class="topbar-right">
+      <span id="lastUpdate" style="opacity:.7"></span>
+      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="dash-inner">
+
+    <!-- 설정 안내 -->
+    <div class="setup-banner" id="setupBanner">
+      ⚙️ <strong>Apps Script URL 설정 필요</strong><br>
+      아래 <code>APPS_SCRIPT_URL</code> 값을 실제 배포 URL로 교체해야 데이터를 불러올 수 있습니다.<br>
+      또한 Apps Script에 <code>doGet</code> 함수가 추가되어 있어야 합니다. (아래 안내 참고)
+    </div>
+
+    <!-- 요약 카드 -->
+    <div class="summary-row">
+      <div class="sum-card"><div class="sum-label">선수 사전등록 총계</div><div class="sum-num" id="cnt_athlete">-</div></div>
+      <div class="sum-card gold"><div class="sum-label">기업 파트너 문의 총계</div><div class="sum-num" id="cnt_partner">-</div></div>
+      <div class="sum-card green"><div class="sum-label">오늘 신규 접수</div><div class="sum-num" id="cnt_today">-</div></div>
+      <div class="sum-card purple"><div class="sum-label">이번 주 신규 접수</div><div class="sum-num" id="cnt_week">-</div></div>
+    </div>
+
+    <!-- 탭 -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('athlete',this)">🏃 선수 사전등록</button>
+      <button class="tab-btn" onclick="switchTab('partner',this)">🤝 기업 파트너 문의</button>
+    </div>
+
+    <!-- 툴바 -->
+    <div class="toolbar">
+      <input class="search-box" id="searchBox" placeholder="이름·종목·회사 검색..." oninput="filterTable()">
+      <div style="display:flex;gap:8px">
+        <button class="btn-refresh" onclick="loadData()">↻ 새로고침</button>
+        <button class="btn-export" onclick="exportCSV()">⬇ CSV 내보내기</button>
+      </div>
+    </div>
+
+    <!-- 선수 테이블 -->
+    <div id="athleteTab" class="table-wrap">
+      <div class="loading-msg">⏳ 데이터를 불러오는 중...</div>
+    </div>
+
+    <!-- 파트너 테이블 -->
+    <div id="partnerTab" class="table-wrap" style="display:none">
+      <div class="loading-msg">⏳ 데이터를 불러오는 중...</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  ⚙️  설정값 — 2가지만 수정하면 됩니다
+// ══════════════════════════════════════════════════════════
+
+// 1) 관리자 비밀번호 (원하는 값으로 변경)
+const ADMIN_PASSWORD = 'nextplayer2026';
+
+// 2) Apps Script 배포 URL (index.html 과 동일한 URL)
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylfuB44xXKwHls-k7leGXj_hSqBciOzjqQeqLrXtv3qUHTF7GZD5id5luYqDslAla2/exec';
+
+// ══════════════════════════════════════════════════════════
+
+let allAthletes = [];
+let allPartners = [];
+let currentTab  = 'athlete';
+
+// ── 로그인 ──────────────────────────────────────────────
+function doLogin() {
+  const pw = document.getElementById('pwInput').value;
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadData();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+  }
+}
+
+function doLogout() {
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('loginWrap').style.display = 'flex';
+  document.getElementById('pwInput').value = '';
+}
+
+// ── 데이터 로드 ──────────────────────────────────────────
+async function loadData() {
+  setLoading('athlete'); setLoading('partner');
+
+  try {
+    // Apps Script GET 요청 (action=getdata)
+    const res = await fetch(APPS_SCRIPT_URL + '?action=getdata&pw=' + encodeURIComponent(ADMIN_PASSWORD));
+    const json = await res.json();
+
+    if (json.error) { showError('athlete', json.error); showError('partner', json.error); return; }
+
+    allAthletes = json.athlete || [];
+    allPartners = json.partner || [];
+
+    renderAthleteTable(allAthletes);
+    renderPartnerTable(allPartners);
+    updateSummary();
+    document.getElementById('lastUpdate').textContent = '최종 업데이트: ' + new Date().toLocaleTimeString('ko-KR');
+
+  } catch(err) {
+    // Apps Script URL 미설정이거나 doGet 함수가 없는 경우 → 샘플 데이터 표시
+    document.getElementById('setupBanner').style.display = 'block';
+    allAthletes = getSampleAthletes();
+    allPartners = getSamplePartners();
+    renderAthleteTable(allAthletes);
+    renderPartnerTable(allPartners);
+    updateSummary();
+    document.getElementById('lastUpdate').textContent = '⚠️ 샘플 데이터 (연동 필요)';
+  }
+}
+
+function setLoading(type) {
+  document.getElementById(type+'Tab').innerHTML = '<div class="loading-msg">⏳ 데이터를 불러오는 중...</div>';
+}
+function showError(type, msg) {
+  document.getElementById(type+'Tab').innerHTML = '<div class="error-msg">❌ ' + msg + '</div>';
+}
+
+// ── 선수 테이블 렌더링 ──────────────────────────────────
+function renderAthleteTable(data) {
+  const wrap = document.getElementById('athleteTab');
+  if (!data.length) { wrap.innerHTML = '<div class="empty-msg">📭 아직 등록된 선수가 없습니다.</div>'; return; }
+
+  const trackBadge = t => {
+    if (!t) return '';
+    const map = {'A':'badge-a','B':'badge-b','C':'badge-c','D':'badge-d'};
+    const key = Object.keys(map).find(k => t.startsWith(k)) || '';
+    return '<span class="badge '+(map[key]||'badge-a')+'">'+t+'</span>';
+  };
+
+  wrap.innerHTML = '<table class="data-table"><thead><tr>' +
+    '<th>제출시각</th><th>성함</th><th>연락처</th><th>이메일</th>' +
+    '<th>종목</th><th>선수경력</th><th>관심트랙</th><th>메시지</th>' +
+    '</tr></thead><tbody>' +
+    data.map(r => '<tr>' +
+      '<td>'+(r[0]||'-')+'</td>' +
+      '<td><strong>'+(r[1]||'-')+'</strong></td>' +
+      '<td>'+(r[2]||'-')+'</td>' +
+      '<td>'+(r[3]||'-')+'</td>' +
+      '<td>'+(r[4]||'-')+'</td>' +
+      '<td>'+(r[5]||'-')+'</td>' +
+      '<td>'+trackBadge(r[6])+'</td>' +
+      '<td style="max-width:200px;word-break:break-all">'+(r[7]||'-')+'</td>' +
+      '</tr>').join('') +
+    '</tbody></table>';
+}
+
+// ── 파트너 테이블 렌더링 ────────────────────────────────
+function renderPartnerTable(data) {
+  const wrap = document.getElementById('partnerTab');
+  if (!data.length) { wrap.innerHTML = '<div class="empty-msg">📭 아직 문의된 기업이 없습니다.</div>'; return; }
+
+  wrap.innerHTML = '<table class="data-table"><thead><tr>' +
+    '<th>제출시각</th><th>담당자</th><th>직책</th><th>회사명</th>' +
+    '<th>이메일</th><th>연락처</th><th>파트너십 유형</th><th>문의내용</th>' +
+    '</tr></thead><tbody>' +
+    data.map(r => '<tr>' +
+      '<td>'+(r[0]||'-')+'</td>' +
+      '<td><strong>'+(r[1]||'-')+'</strong></td>' +
+      '<td>'+(r[2]||'-')+'</td>' +
+      '<td><strong>'+(r[3]||'-')+'</strong></td>' +
+      '<td>'+(r[4]||'-')+'</td>' +
+      '<td>'+(r[5]||'-')+'</td>' +
+      '<td><span class="badge badge-b">'+(r[6]||'-')+'</span></td>' +
+      '<td style="max-width:200px;word-break:break-all">'+(r[7]||'-')+'</td>' +
+      '</tr>').join('') +
+    '</tbody></table>';
+}
+
+// ── 요약 카드 ────────────────────────────────────────────
+function updateSummary() {
+  document.getElementById('cnt_athlete').textContent = allAthletes.length;
+  document.getElementById('cnt_partner').textContent = allPartners.length;
+
+  const today = new Date().toLocaleDateString('ko-KR');
+  const weekAgo = new Date(Date.now() - 7*24*60*60*1000);
+
+  const todayCount = [...allAthletes, ...allPartners].filter(r => r[0] && r[0].startsWith(today.replace(/\. /g,'.').replace('.','-'))).length;
+  const weekCount  = [...allAthletes, ...allPartners].filter(r => {
+    if (!r[0]) return false;
+    try { return new Date(r[0]) >= weekAgo; } catch(e) { return false; }
+  }).length;
+
+  document.getElementById('cnt_today').textContent = todayCount;
+  document.getElementById('cnt_week').textContent  = weekCount;
+}
+
+// ── 탭 전환 ─────────────────────────────────────────────
+function switchTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('athleteTab').style.display = tab === 'athlete' ? 'block' : 'none';
+  document.getElementById('partnerTab').style.display = tab === 'partner' ? 'block' : 'none';
+  document.getElementById('searchBox').value = '';
+}
+
+// ── 검색 필터 ────────────────────────────────────────────
+function filterTable() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  const data = currentTab === 'athlete' ? allAthletes : allPartners;
+  const filtered = data.filter(r => r.some(cell => cell && String(cell).toLowerCase().includes(q)));
+  if (currentTab === 'athlete') renderAthleteTable(filtered);
+  else renderPartnerTable(filtered);
+}
+
+// ── CSV 내보내기 ─────────────────────────────────────────
+function exportCSV() {
+  const isAthlete = currentTab === 'athlete';
+  const header = isAthlete
+    ? ['제출시각','성함','연락처','이메일','종목','선수경력','관심트랙','메시지']
+    : ['제출시각','담당자','직책','회사명','이메일','연락처','파트너십유형','문의내용'];
+  const data = isAthlete ? allAthletes : allPartners;
+
+  const csv = '﻿' + [header, ...data].map(r => r.map(c => '"'+(c||'').toString().replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'nextplayer_' + currentTab + '_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+// ── 샘플 데이터 (연동 전 미리보기용) ────────────────────
+function getSampleAthletes() {
+  return [
+    ['2026. 6. 19. 오후 2:30', '김민준', '010-1234-5678', 'minjun@email.com', '축구', '은퇴 1년 이내', 'A. 스포츠·교육·코칭', '코치 자격증 취득에 관심 있습니다.'],
+    ['2026. 6. 19. 오후 3:10', '이서연', '010-9876-5432', 'seoyeon@email.com', '수영', '현역 (은퇴 준비 중)', 'B. 스포츠 비즈니스·미디어', ''],
+    ['2026. 6. 19. 오후 4:00', '박태준', '010-5555-1234', 'taejun@email.com', '태권도', '은퇴 3년 이상', 'C. 건강·웰니스·재활', 'PT 트레이너로 전환하고 싶습니다.'],
+  ];
+}
+function getSamplePartners() {
+  return [
+    ['2026. 6. 19. 오후 2:45', '홍길동', '인사팀 과장', '스포츠코리아(주)', 'hr@sportskorea.com', '02-1234-5678', 'Silver — 인턴십 협약 (연 200만원)', '인턴십 5명 채용 검토 중입니다.'],
+  ];
+}
+</script>
+
+<!--
+════════════════════════════════════════════════════════════
+  📋  Apps Script doGet 함수 추가 안내
+════════════════════════════════════════════════════════════
+
+  기존 Apps Script에 아래 함수를 추가해야 합니다.
+  (기존 doPost 함수 아래에 붙여넣기)
+
+─────────────────────────────────────────────────────────
+function doGet(e) {
+  const action = e.parameter.action;
+  const pw     = e.parameter.pw;
+
+  // 비밀번호 확인 (admin.html 의 ADMIN_PASSWORD 와 동일하게)
+  if (pw !== 'nextplayer2026') {
+    return ContentService
+      .createTextOutput(JSON.stringify({ error: '인증 실패' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === 'getdata') {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    const getSheet = name => {
+      const s = ss.getSheetByName(name);
+      if (!s || s.getLastRow() < 2) return [];
+      return s.getRange(2, 1, s.getLastRow()-1, 8).getValues();
+    };
+
+    const result = {
+      athlete: getSheet('선수등록'),
+      partner: getSheet('파트너문의')
+    };
+
+    return ContentService
+      .createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ error: 'unknown action' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+─────────────────────────────────────────────────────────
+
+  추가 후 → 배포 → 새 버전으로 배포(기존 배포 업데이트) 필요
+════════════════════════════════════════════════════════════
+-->
+</body>
+</html>
