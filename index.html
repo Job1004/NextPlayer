@@ -106,15 +106,13 @@ section{padding:88px 5%}.sec-inner{max-width:1140px;margin:0 auto}
 .tl-dot{width:48px;height:48px;border-radius:50%;background:var(--blue-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0;position:relative;z-index:1;box-shadow:0 0 0 4px var(--blue-light)}
 .tl-content{background:#fff;border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow);flex:1}
 .tl-date{font-size:.78rem;color:var(--blue-mid);font-weight:700;margin-bottom:3px}.tl-content h3{font-size:.95rem;font-weight:700;color:var(--blue-dark)}.tl-content p{font-size:.86rem;color:var(--gray);margin-top:3px}
-
-/* ──── FORMS ──── */
 #join{background:#fff}
 .forms-wrap{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px}
 @media(max-width:768px){.forms-wrap{grid-template-columns:1fr}}
 .form-card{background:#fff;border-radius:var(--radius);padding:34px 28px;box-shadow:var(--shadow);border-top:5px solid var(--blue-dark)}
 .form-card.partner{border-top-color:var(--gold)}
 .form-card h2{font-size:1.25rem;font-weight:800;color:var(--blue-dark);margin-bottom:5px}
-.form-card.partner h2{color:var(--gold)}
+.form-card.partner h2{color:#b8952e}
 .form-desc{font-size:.86rem;color:var(--gray);margin-bottom:22px}
 .form-group{margin-bottom:14px}
 .form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--blue-dark);margin-bottom:5px}
@@ -128,21 +126,20 @@ section{padding:88px 5%}.sec-inner{max-width:1140px;margin:0 auto}
 .form-check label a{color:var(--blue-mid);text-decoration:underline}
 .btn-submit{width:100%;padding:13px;background:var(--blue-dark);color:#fff;border:none;border-radius:8px;font-size:.92rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;font-family:inherit}
 .btn-submit:hover{background:var(--blue-mid);transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .form-card.partner .btn-submit{background:var(--gold);color:var(--blue-dark)}
 .form-card.partner .btn-submit:hover{background:#b8952e}
-/* 상태 메시지 */
-.form-status{display:none;border-radius:8px;padding:14px 18px;font-weight:600;font-size:.88rem;text-align:center;margin-top:14px}
+.form-status{display:none;border-radius:8px;padding:14px 18px;font-weight:600;font-size:.88rem;text-align:center;margin-top:14px;white-space:pre-line}
 .form-status.success{background:#E2EFDA;border:1.5px solid #375623;color:#375623}
 .form-status.error{background:#FDECEA;border:1.5px solid #C00000;color:#C00000}
 .form-status.sending{background:#EEF4FB;border:1.5px solid var(--blue-mid);color:var(--blue-mid)}
-
 #faq{background:var(--gray-light)}
 .faq-list{margin-top:40px;display:flex;flex-direction:column;gap:10px}
 .faq-item{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
 .faq-q{padding:18px 22px;font-weight:700;font-size:.92rem;color:var(--blue-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
 .faq-q::after{content:'+';font-size:1.3rem;color:var(--blue-mid);transition:transform .2s}
 .faq-item.open .faq-q::after{transform:rotate(45deg)}
-.faq-a{display:none;padding:0 22px 18px;font-size:.875rem;color:var(--gray);border-top:1px solid var(--blue-light);padding-top:14px}
+.faq-a{display:none;padding:14px 22px 18px;font-size:.875rem;color:var(--gray);border-top:1px solid var(--blue-light)}
 .faq-item.open .faq-a{display:block}
 footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
 .footer-inner{max-width:1140px;margin:0 auto}
@@ -173,7 +170,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   <a href="#join" class="nav-cta">참여하기 →</a>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -216,7 +212,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </section>
 
-<!-- 종목 -->
 <section id="sports"><div class="sec-inner">
   <div class="reveal">
     <div class="sec-tag">누구를 위한 법인인가요</div>
@@ -233,7 +228,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </div></section>
 
-<!-- 여정 -->
 <section id="journey"><div class="sec-inner">
   <div class="reveal" style="text-align:center">
     <div class="sec-tag" style="text-align:center">어떻게 변화하나요</div>
@@ -246,7 +240,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </div></section>
 
-<!-- 영상 -->
 <section id="video-section"><div class="sec-inner">
   <div class="reveal"><div class="sec-tag">영상으로 보기</div><h2 class="sec-title">3분으로 이해하는 넥스트플레이어</h2></div>
   <div class="video-wrap">
@@ -269,7 +262,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </div></section>
 
-<!-- 배경 -->
 <section id="problem"><div class="sec-inner">
   <div class="reveal"><div class="sec-tag">왜 넥스트플레이어인가</div><h2 class="sec-title">엘리트 선수,<br>은퇴 후엔 사각지대입니다</h2></div>
   <div class="problem-grid">
@@ -282,7 +274,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </div></section>
 
-<!-- 미션 -->
 <section id="mission"><div class="sec-inner">
   <div class="reveal"><div class="sec-tag">미션 & 비전</div><h2 class="sec-title">우리는 이렇게 돕습니다</h2><p class="sec-desc">교육·훈련·매칭·창업 지원의 4단계 체계로 선수 한 명 한 명의 제2커리어를 설계합니다.</p></div>
   <div class="mission-cards">
@@ -293,7 +284,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </div></section>
 
-<!-- 프로그램 -->
 <section id="program"><div class="sec-inner">
   <div class="reveal"><div class="sec-tag">교육 프로그램</div><h2 class="sec-title">4개 트랙, 나에게 맞는 길을 찾습니다</h2></div>
   <div class="program-grid">
@@ -304,7 +294,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </div></section>
 
-<!-- 타임라인 -->
 <section id="timeline-sec"><div class="sec-inner">
   <div class="reveal"><div class="sec-tag">설립 추진 일정</div><h2 class="sec-title">2027년 공식 운영 시작을 목표로 합니다</h2></div>
   <div class="timeline">
@@ -315,7 +304,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </div></section>
 
-<!-- ════════════ 참여 폼 ════════════ -->
 <section id="join"><div class="sec-inner">
   <div class="reveal" style="text-align:center">
     <div class="sec-tag" style="text-align:center">함께해 주세요</div>
@@ -323,8 +311,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
     <p class="sec-desc" style="text-align:center;margin:0 auto 0">작성하신 내용은 구글 스프레드시트에 자동 저장되고, 담당자에게 이메일로 즉시 전달됩니다.</p>
   </div>
   <div class="forms-wrap">
-
-    <!-- 선수 사전등록 -->
     <div class="form-card reveal">
       <h2>🏃 선수 사전등록</h2>
       <p class="form-desc">프로그램 출시 시 우선 안내와 초기 할인 혜택을 받으세요. (은퇴 예정 현역 포함)</p>
@@ -344,13 +330,12 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
           <select name="track"><option value="">선택 (선택사항)</option><option>A. 스포츠·교육·코칭</option><option>B. 스포츠 비즈니스·미디어</option><option>C. 건강·웰니스·재활</option><option>D. 기업 취업·공공 행정</option><option>아직 모르겠음</option></select>
         </div>
         <div class="form-group"><label>하고 싶은 말 (선택)</label><textarea name="message" placeholder="현재 상황이나 궁금한 점을 자유롭게 적어주세요."></textarea></div>
-        <div class="form-check"><input type="checkbox" id="a_agree" required><label for="a_agree">수집된 정보는 사업 안내 목적으로만 사용되며, <a href="#">개인정보 처리방침</a>에 동의합니다.</label></div>
+        <div class="form-check"><input type="checkbox" id="a_agree" required><label for="a_agree">수집된 정보는 사업 안내 목적으로만 사용되며, 개인정보 처리방침에 동의합니다.</label></div>
         <button type="submit" class="btn-submit">사전등록 신청하기</button>
         <div class="form-status" id="status_athlete"></div>
       </form>
     </div>
 
-    <!-- 기업 파트너 -->
     <div class="form-card partner reveal">
       <h2>🤝 기업 파트너 문의</h2>
       <p class="form-desc">채용 협약·인턴십·후원 등 다양한 파트너십을 제안해 주세요.</p>
@@ -368,7 +353,7 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
           <select name="partnership"><option value="">선택</option><option>Gold — 채용 협약 (연 500만원)</option><option>Silver — 인턴십 협약 (연 200만원)</option><option>Bronze — 네트워크 협약 (연 100만원)</option><option>후원·협찬 (별도 협의)</option><option>기타 (문의)</option></select>
         </div>
         <div class="form-group"><label>문의 내용 *</label><textarea name="message" required placeholder="파트너십 관련 문의, 채용 규모, 희망 트랙 등을 적어주세요."></textarea></div>
-        <div class="form-check"><input type="checkbox" id="p_agree" required><label for="p_agree">수집된 정보는 파트너십 안내 목적으로만 사용되며, <a href="#">개인정보 처리방침</a>에 동의합니다.</label></div>
+        <div class="form-check"><input type="checkbox" id="p_agree" required><label for="p_agree">수집된 정보는 파트너십 안내 목적으로만 사용되며, 개인정보 처리방침에 동의합니다.</label></div>
         <button type="submit" class="btn-submit">파트너십 문의하기</button>
         <div class="form-status" id="status_partner"></div>
       </form>
@@ -376,7 +361,6 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
   </div>
 </div></section>
 
-<!-- FAQ -->
 <section id="faq"><div class="sec-inner">
   <div class="reveal"><div class="sec-tag">자주 묻는 질문</div><h2 class="sec-title">궁금한 점이 있으신가요?</h2></div>
   <div class="faq-list">
@@ -401,108 +385,79 @@ footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
 <div id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════════════════
-//  ⚙️  설정 영역 — 이 두 값만 교체하면 모든 연동이 완료됩니다
-// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
+// ✅ Google Sheets 연동 URL (설정 완료)
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylfuB44xXKwHls-k7leGXj_hSqBciOzjqQeqLrXtv3qUHTF7GZD5id5luYqDslAla2/exec';
 
-// 1) Google Apps Script 배포 URL
-//    (설정 방법은 페이지 하단 주석 참고)
-const APPS_SCRIPT_URL = 'const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylfuB44xXKwHls-k7leGXj_hSqBciOzjqQeqLrXtv3qUHTF7GZD5id5luYqDslAla2/exec';';
-
-// 2) 카카오 JavaScript 앱 키
-//    developers.kakao.com → 내 애플리케이션 → 앱 키 → JavaScript 키
+// 카카오 JavaScript 앱 키 (필요 시 교체)
 const KAKAO_JS_KEY = 'YOUR_KAKAO_JS_KEY';
 
-// 3) 소개 유튜브 영상 ID
-//    youtube.com/watch?v= 뒤 11자리 (예: dQw4w9WgXcQ)
+// 유튜브 영상 ID (영상 제작 후 교체)
 const YT_VIDEO_ID = 'YOUR_VIDEO_ID';
+// ══════════════════════════════════════════════════════
 
-// ══════════════════════════════════════════════════════════
-//  이하 코드는 수정하지 않아도 됩니다
-// ══════════════════════════════════════════════════════════
-
-// Kakao 초기화
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', function() {
   if (typeof Kakao !== 'undefined' && KAKAO_JS_KEY !== 'YOUR_KAKAO_JS_KEY') {
     Kakao.init(KAKAO_JS_KEY);
   }
+  // 스크롤 애니메이션
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(r) { obs.observe(r); });
 });
 
-// ── Google Sheets 폼 전송 ──────────────────────────────
 async function submitForm(e, type) {
   e.preventDefault();
-  const form = e.target;
-  const btn  = form.querySelector('.btn-submit');
-  const statusEl = document.getElementById('status_' + type);
+  var form = e.target;
+  var btn = form.querySelector('.btn-submit');
+  var statusEl = document.getElementById('status_' + type);
 
-  // 전송 중 상태 표시
   btn.disabled = true;
   btn.textContent = '전송 중...';
   showStatus(statusEl, 'sending', '⏳ 전송 중입니다...');
 
-  // Apps Script URL 미설정 시 안내
-  if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL') {
-    await fakeDelay(800);
-    showStatus(statusEl, 'error',
-      '⚠️ 아직 Google Sheets가 연동되지 않았습니다.\n' +
-      '아래 안내에 따라 Apps Script URL을 설정해 주세요.');
-    resetBtn(btn, type);
-    return;
-  }
-
-  // FormData → 일반 객체로 변환
-  const payload = { type };
-  new FormData(form).forEach((v, k) => { payload[k] = v; });
+  var payload = { type: type };
+  new FormData(form).forEach(function(v, k) { payload[k] = v; });
 
   try {
-    // no-cors: 응답 본문을 읽을 수 없지만 전송은 정상 동작
     await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-
     form.reset();
     showStatus(statusEl, 'success',
       type === 'athlete'
         ? '✅ 사전등록이 완료되었습니다!\n프로그램 출시 시 가장 먼저 안내드리겠습니다.'
         : '✅ 파트너십 문의가 접수되었습니다!\n영업일 기준 2일 이내 담당자가 연락드리겠습니다.');
     showToast('✅ 제출 완료! 스프레드시트에 저장되었습니다.');
-    setTimeout(() => hideStatus(statusEl), 8000);
-
-  } catch (err) {
-    showStatus(statusEl, 'error', '❌ 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.\n(문의: jobcnu@gmail.com)');
-  } finally {
-    resetBtn(btn, type);
+    setTimeout(function() { statusEl.style.display = 'none'; }, 8000);
+  } catch(err) {
+    showStatus(statusEl, 'error', '❌ 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.\n문의: jobcnu@gmail.com');
   }
+
+  btn.disabled = false;
+  btn.textContent = type === 'athlete' ? '사전등록 신청하기' : '파트너십 문의하기';
 }
 
 function showStatus(el, cls, msg) {
   el.className = 'form-status ' + cls;
   el.style.display = 'block';
-  el.style.whiteSpace = 'pre-line';
   el.textContent = msg;
 }
-function hideStatus(el) { el.style.display = 'none'; }
-function resetBtn(btn, type) {
-  btn.disabled = false;
-  btn.textContent = type === 'athlete' ? '사전등록 신청하기' : '파트너십 문의하기';
-}
-function fakeDelay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ── YouTube ────────────────────────────────────────────
 function playVideo() {
   if (YT_VIDEO_ID === 'YOUR_VIDEO_ID') {
-    alert('소개 영상을 유튜브에 업로드하신 후\nHTML 파일의 YT_VIDEO_ID 값을 영상 ID로 교체해 주세요.\n\n예: youtube.com/watch?v=abc123xyz → abc123xyz');
+    alert('소개 영상을 유튜브에 업로드하신 후\nHTML 파일의 YT_VIDEO_ID 값을 영상 ID로 교체해 주세요.');
     return;
   }
-  const frame = document.getElementById('ytFrame');
-  frame.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`;
+  var frame = document.getElementById('ytFrame');
+  frame.src = 'https://www.youtube.com/embed/' + YT_VIDEO_ID + '?autoplay=1&rel=0&modestbranding=1';
   document.getElementById('ytBox').classList.add('playing');
 }
 
-// ── 카카오 공유 ────────────────────────────────────────
 function shareKakao() {
   if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
     alert('카카오 앱 키를 설정하지 않으셨습니다.\n지금은 링크 복사 버튼을 이용해 주세요.');
@@ -514,137 +469,35 @@ function shareKakao() {
       title: '사단법인 넥스트플레이어 — 선수의 도전은 은퇴 후에도 계속됩니다',
       description: '연간 3,000명 은퇴 선수의 제2커리어를 지원합니다. 선수 사전등록 & 기업 파트너 모집 중!',
       imageUrl: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&h=400&fit=crop&q=80',
-      link: { mobileWebUrl: location.href, webUrl: location.href },
+      link: { mobileWebUrl: location.href, webUrl: location.href }
     },
     buttons: [
       { title: '🏃 선수 사전등록', link: { mobileWebUrl: location.href+'#join', webUrl: location.href+'#join' } },
-      { title: '🤝 기업 파트너 문의', link: { mobileWebUrl: location.href+'#join', webUrl: location.href+'#join' } },
-    ],
+      { title: '🤝 기업 파트너 문의', link: { mobileWebUrl: location.href+'#join', webUrl: location.href+'#join' } }
+    ]
   });
 }
 
-// ── 링크 복사 ──────────────────────────────────────────
 function copyLink() {
-  const url = location.href;
+  var url = location.href;
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(() => showToast('🔗 링크가 복사되었습니다!'));
+    navigator.clipboard.writeText(url).then(function() { showToast('🔗 링크가 복사되었습니다!'); });
   } else {
-    const el = document.createElement('input');
+    var el = document.createElement('input');
     el.value = url; document.body.appendChild(el);
     el.select(); document.execCommand('copy'); document.body.removeChild(el);
     showToast('🔗 링크가 복사되었습니다!');
   }
 }
 
-// ── Toast ──────────────────────────────────────────────
 function showToast(msg) {
-  const t = document.getElementById('toast');
+  var t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3500);
+  setTimeout(function() { t.classList.remove('show'); }, 3500);
 }
 
-// ── FAQ ────────────────────────────────────────────────
 function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
-
-// ── Scroll reveal ──────────────────────────────────────
-new IntersectionObserver(
-  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-  { threshold: 0.1 }
-).observe = (() => {
-  const obs = new IntersectionObserver(
-    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-    { threshold: 0.1 }
-  );
-  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
-  return obs.observe.bind(obs);
-})();
 </script>
-
-<!--
-════════════════════════════════════════════════════════════
-  📋  Google Sheets 연동 설정 가이드 (5단계, 약 15분)
-════════════════════════════════════════════════════════════
-
-  ① Google Sheets 생성
-     - sheets.google.com 에서 새 스프레드시트 생성
-     - 시트 이름: '선수등록' / '파트너문의' 두 개 준비
-
-  ② Apps Script 열기
-     - 상단 메뉴 → 확장 프로그램 → Apps Script
-
-  ③ 아래 코드를 붙여넣기 (기존 코드 전체 삭제 후)
-
-─────────────────────────────────────────────────────────
-function doPost(e) {
-  const ss   = SpreadsheetApp.getActiveSpreadsheet();
-  const data = JSON.parse(e.postData.contents);
-  const type = data.type; // 'athlete' or 'partner'
-
-  const sheetName = type === 'athlete' ? '선수등록' : '파트너문의';
-  let sheet = ss.getSheetByName(sheetName);
-  if (!sheet) sheet = ss.insertSheet(sheetName);
-
-  // 헤더 자동 생성 (첫 행)
-  if (sheet.getLastRow() === 0) {
-    if (type === 'athlete') {
-      sheet.appendRow(['제출시각','성함','연락처','이메일','종목','경력','관심트랙','메시지']);
-    } else {
-      sheet.appendRow(['제출시각','담당자','직책','회사명','이메일','연락처','파트너십유형','문의내용']);
-    }
-    sheet.getRange(1,1,1,8).setBackground('#1F4E79').setFontColor('#FFFFFF').setFontWeight('bold');
-  }
-
-  // 데이터 행 추가
-  if (type === 'athlete') {
-    sheet.appendRow([
-      new Date().toLocaleString('ko-KR'),
-      data.name, data.phone, data.email,
-      data.sport, data.career, data.track, data.message
-    ]);
-  } else {
-    sheet.appendRow([
-      new Date().toLocaleString('ko-KR'),
-      data.name, data.title, data.company,
-      data.email, data.phone, data.partnership, data.message
-    ]);
-  }
-
-  // 이메일 알림 전송
-  const subject = type === 'athlete'
-    ? '[넥스트플레이어] 새 선수 등록: ' + data.name + ' (' + data.sport + ')'
-    : '[넥스트플레이어] 새 파트너 문의: ' + data.company + ' / ' + data.name;
-
-  const body = Object.entries(data).map(([k,v]) => k + ': ' + v).join('\n');
-
-  MailApp.sendEmail({
-    to: 'jobcnu@gmail.com',
-    subject: subject,
-    body: body
-  });
-
-  return ContentService
-    .createTextOutput(JSON.stringify({ result: 'ok' }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-─────────────────────────────────────────────────────────
-
-  ④ 배포
-     - 오른쪽 위 '배포' → '새 배포'
-     - 유형: 웹 앱
-     - 설명: nextplayer-form-v1
-     - 다음 사용자로 실행: 나(본인 계정)
-     - 액세스 권한: 모든 사용자
-     - '배포' 클릭 → 웹 앱 URL 복사
-
-  ⑤ HTML 파일 수정
-     - 상단 const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
-       → 복사한 URL로 교체하고 저장
-
-  ✅ 완료! 이제 폼 제출 시:
-     - Google Sheets에 실시간 저장
-     - jobcnu@gmail.com 으로 이메일 즉시 발송
-════════════════════════════════════════════════════════════
--->
 </body>
 </html>
