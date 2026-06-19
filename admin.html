@@ -156,7 +156,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
 // ══════════════════════════════════════════════════════════
 
 // 1) 관리자 비밀번호 (원하는 값으로 변경)
-const ADMIN_PASSWORD = 'nextplayer2026';
+const ADMIN_PASSWORD = 'Hmg20022002';
 
 // 2) Apps Script 배포 URL (index.html 과 동일한 URL)
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylfuB44xXKwHls-k7leGXj_hSqBciOzjqQeqLrXtv3qUHTF7GZD5id5luYqDslAla2/exec';
@@ -357,7 +357,7 @@ function doGet(e) {
   const pw     = e.parameter.pw;
 
   // 비밀번호 확인 (admin.html 의 ADMIN_PASSWORD 와 동일하게)
-  if (pw !== 'nextplayer2026') {
+  if (pw !== 'Hmg20022002') {
     return ContentService
       .createTextOutput(JSON.stringify({ error: '인증 실패' }))
       .setMimeType(ContentService.MimeType.JSON);
