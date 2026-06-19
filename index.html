@@ -3,393 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>넥스트플레이어 | 관리자 대시보드</title>
+<title>사단법인 넥스트플레이어 | Athletes Beyond the Game</title>
+<meta name="description" content="엘리트 선수의 제2·제3의 직업을 지원하는 사단법인 넥스트플레이어 설립 추진위원회입니다.">
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous"></script>
 <style>
-:root{--blue:#1F4E79;--blue-mid:#2E75B6;--gold:#C9A84C;--gray:#666;--light:#F5F7FA;--white:#fff;--red:#C00000;--green:#375623}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--light);color:#2D2D2D;min-height:100vh}
-
-/* ── 로그인 화면 ── */
-#loginWrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0a1e30,#1F4E79)}
-.login-box{background:#fff;border-radius:16px;padding:48px 40px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center}
-.login-logo{font-size:1.5rem;font-weight:900;color:var(--blue);margin-bottom:6px}.login-logo span{color:var(--gold)}
-.login-sub{font-size:.85rem;color:var(--gray);margin-bottom:32px}
-.login-box input{width:100%;padding:12px 14px;border:1.5px solid #D0DFF0;border-radius:8px;font-size:.95rem;font-family:inherit;margin-bottom:12px;transition:border-color .2s}
-.login-box input:focus{outline:none;border-color:var(--blue-mid)}
-.login-btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
-.login-btn:hover{background:var(--blue-mid)}
-.login-err{display:none;color:var(--red);font-size:.83rem;margin-top:10px}
-
-/* ── 대시보드 ── */
-#dashboard{display:none}
-.topbar{background:var(--blue);color:#fff;padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.topbar-logo{font-size:1rem;font-weight:800}.topbar-logo span{color:var(--gold)}
-.topbar-right{display:flex;align-items:center;gap:16px;font-size:.85rem}
-.logout-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.83rem;font-family:inherit}
-.logout-btn:hover{background:rgba(255,255,255,.25)}
-
-.dash-inner{max-width:1200px;margin:0 auto;padding:32px 5%}
-
-/* 요약 카드 */
-.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
-@media(max-width:768px){.summary-row{grid-template-columns:repeat(2,1fr)}}
-.sum-card{background:#fff;border-radius:12px;padding:22px 20px;box-shadow:0 2px 12px rgba(31,78,121,.08);border-top:4px solid var(--blue)}
-.sum-card.gold{border-top-color:var(--gold)}
-.sum-card.green{border-top-color:#2E8B57}
-.sum-card.purple{border-top-color:#7B4FAB}
-.sum-label{font-size:.78rem;color:var(--gray);font-weight:600;margin-bottom:6px}
-.sum-num{font-size:2rem;font-weight:900;color:var(--blue)}
-.sum-card.gold .sum-num{color:var(--gold)}
-.sum-card.green .sum-num{color:#2E8B57}
-.sum-card.purple .sum-num{color:#7B4FAB}
-
-/* 탭 */
-.tabs{display:flex;gap:0;border-bottom:2px solid #D0DFF0;margin-bottom:24px}
-.tab-btn{padding:12px 28px;font-size:.92rem;font-weight:600;color:var(--gray);background:none;border:none;cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s}
-.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
-
-/* 툴바 */
-.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
-.search-box{padding:8px 14px;border:1.5px solid #D0DFF0;border-radius:8px;font-size:.88rem;font-family:inherit;width:240px}
-.search-box:focus{outline:none;border-color:var(--blue-mid)}
-.btn-refresh{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px}
-.btn-refresh:hover{background:var(--blue-mid)}
-.btn-export{background:#2E8B57;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}
-.btn-export:hover{background:#256B45}
-
-/* 테이블 */
-.table-wrap{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(31,78,121,.08);overflow:hidden}
-.data-table{width:100%;border-collapse:collapse;font-size:.86rem}
-.data-table th{background:var(--blue);color:#fff;padding:12px 14px;text-align:left;font-weight:600;font-size:.82rem;white-space:nowrap}
-.data-table td{padding:12px 14px;border-bottom:1px solid #EEF4FB;color:#2D2D2D;vertical-align:top}
-.data-table tr:last-child td{border-bottom:none}
-.data-table tr:hover td{background:#F7FAFF}
-.data-table td:first-child{color:var(--gray);font-size:.78rem;white-space:nowrap}
-.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
-.badge-a{background:#EEF4FB;color:var(--blue-mid)}
-.badge-b{background:#FFF8EE;color:#9A6E1A}
-.badge-c{background:#F0FAF4;color:#2E8B57}
-.badge-d{background:#F7F0FB;color:#7B4FAB}
-
-/* 상태 */
-.loading-msg{text-align:center;padding:48px;color:var(--gray);font-size:.9rem}
-.empty-msg{text-align:center;padding:48px;color:var(--gray)}
-.error-msg{text-align:center;padding:48px;color:var(--red)}
-
-/* 설정 안내 배너 */
-.setup-banner{background:#FFF8E1;border:1.5px solid var(--gold);border-radius:10px;padding:18px 22px;margin-bottom:24px;font-size:.875rem;line-height:1.7;display:none}
-.setup-banner strong{color:var(--blue)}
-.setup-banner code{background:#EEE;padding:2px 6px;border-radius:4px;font-size:.82rem}
+:root{--blue-dark:#1F4E79;--blue-mid:#2E75B6;--blue-light:#BDD7EE;--gold:#C9A84C;--gray-dark:#2D2D2D;--gray:#666;--gray-light:#F5F7FA;--white:#fff;--radius:14px;--shadow:0 4px 28px rgba(31,78,121,.10)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:var(--gray-dark);background:var(--white);line-height:1.7}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;background:rgba(15,35,60,.95);backdrop-filter:blur(10px);box-shadow:0 2px 20px rgba(0,0,0,.2)}
+.nav-logo{color:#fff;font-size:1.1rem;font-weight:800}.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2rem}.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;transition:color .2s}.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--blue-dark);padding:8px 20px;border-radius:20px;font-size:.85rem;font-weight:700;text-decoration:none}
+@media(max-width:768px){.nav-links{display:none}}
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;background:#0a1e30;padding-top:64px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1600&h=900&fit=crop&q=80') center/cover no-repeat;opacity:.38}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,20,40,.85) 0%,rgba(31,78,121,.70) 60%,rgba(46,117,182,.50) 100%)}
+.hero-content{position:relative;z-index:2;flex:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1140px;margin:0 auto;width:100%;padding:80px 5% 60px}
+@media(max-width:768px){.hero-content{grid-template-columns:1fr;padding:60px 5% 40px;gap:32px}}
+.hero-badge{display:inline-block;background:rgba(201,168,76,.2);border:1px solid var(--gold);color:var(--gold);padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:700;letter-spacing:.06em;margin-bottom:18px}
+.hero-title{color:#fff;font-size:clamp(2rem,4vw,3.1rem);font-weight:900;line-height:1.15;margin-bottom:18px}
+.hero-title em{color:var(--gold);font-style:normal}
+.hero-sub{color:rgba(255,255,255,.82);font-size:1.05rem;margin-bottom:32px;line-height:1.75}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.btn-primary{background:var(--gold);color:var(--blue-dark);padding:13px 30px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem;transition:transform .15s,box-shadow .15s;display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,.4)}
+.btn-secondary{background:transparent;color:#fff;padding:13px 28px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.95rem;border:2px solid rgba(255,255,255,.5);display:inline-block}
+.kakao-btn{display:inline-flex;align-items:center;gap:7px;background:#FEE500;color:#3A1D1D;padding:10px 20px;border-radius:8px;font-weight:700;font-size:.88rem;border:none;cursor:pointer;font-family:inherit;transition:transform .15s}
+.kakao-btn:hover{transform:translateY(-1px)}
+.copy-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:.88rem;border:1px solid rgba(255,255,255,.25);cursor:pointer;font-family:inherit}
+.hero-mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:180px 180px;gap:10px;border-radius:var(--radius);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.m-img{background-size:cover;background-position:center;transition:transform .4s}.m-img:hover{transform:scale(1.04)}
+.m-img:first-child{grid-row:span 2;background-image:url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&h=400&fit=crop&q=80')}
+.m-img:nth-child(2){background-image:url('https://images.unsplash.com/photo-1530549387789-4c1017266635?w=400&h=200&fit=crop&q=80')}
+.m-img:nth-child(3){background-image:url('https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=200&fit=crop&q=80')}
+.share-bar{position:relative;z-index:2;background:rgba(0,0,0,.3);border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;gap:14px;padding:16px 5%;flex-wrap:wrap}
+.share-bar-label{color:rgba(255,255,255,.7);font-size:.875rem}
+.hero-stats{position:relative;z-index:2;background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.1);display:grid;grid-template-columns:repeat(4,1fr)}
+@media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+.hero-stat{padding:24px 20px;text-align:center;border-right:1px solid rgba(255,255,255,.08)}.hero-stat:last-child{border-right:none}
+.hero-stat .num{font-size:1.9rem;font-weight:900;color:var(--gold)}.hero-stat .lbl{font-size:.78rem;color:rgba(255,255,255,.65);margin-top:3px}
+section{padding:88px 5%}.sec-inner{max-width:1140px;margin:0 auto}
+.sec-tag{color:var(--blue-mid);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.sec-title{font-size:clamp(1.55rem,3vw,2.2rem);font-weight:900;color:var(--blue-dark);margin-bottom:14px;line-height:1.2}
+.sec-desc{color:var(--gray);font-size:1rem;max-width:620px;line-height:1.75}
+#sports{background:var(--gray-light)}
+.sports-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px;margin-top:48px}
+.sport-card{border-radius:var(--radius);overflow:hidden;position:relative;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+.sport-card:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(31,78,121,.18)}
+.sport-img{height:180px;background-size:cover;background-position:center;transition:transform .4s}.sport-card:hover .sport-img{transform:scale(1.07)}
+.sport-info{background:#fff;padding:14px 16px}.sport-info h3{font-size:.92rem;font-weight:700;color:var(--blue-dark);margin-bottom:3px}.sport-info p{font-size:.78rem;color:var(--gray);line-height:1.5}
+.s-badge{position:absolute;top:10px;left:10px;background:rgba(31,78,121,.85);color:#fff;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:12px}
+#journey{background:#fff}
+.journey-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;position:relative}
+.journey-steps::before{content:'';position:absolute;top:100px;left:16.67%;right:16.67%;height:3px;background:linear-gradient(90deg,var(--blue-mid),var(--gold));z-index:0}
+@media(max-width:768px){.journey-steps{grid-template-columns:1fr;gap:28px}.journey-steps::before{display:none}}
+.j-step{text-align:center;padding:0 20px;position:relative;z-index:1}
+.j-img-wrap{width:200px;height:200px;border-radius:50%;overflow:hidden;margin:0 auto 20px;border:5px solid var(--white);box-shadow:0 8px 32px rgba(31,78,121,.18);position:relative}
+.j-img-wrap img{width:100%;height:100%;object-fit:cover}
+.j-num{position:absolute;top:-4px;right:0;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:#fff}
+.j-num.n1{background:var(--blue-mid)}.j-num.n2{background:var(--gold);color:var(--blue-dark)}.j-num.n3{background:#2E8B57}
+.j-step h3{font-size:1.05rem;font-weight:800;color:var(--blue-dark);margin-bottom:8px}
+.j-step p{font-size:.875rem;color:var(--gray);line-height:1.65;max-width:220px;margin:0 auto}
+#video-section{background:var(--blue-dark)}
+#video-section .sec-tag{color:var(--gold)}#video-section .sec-title{color:#fff}
+.video-wrap{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+@media(max-width:768px){.video-wrap{grid-template-columns:1fr}}
+.yt-container{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);background:#000;aspect-ratio:16/9}
+.yt-facade{position:absolute;inset:0;cursor:pointer;display:flex;align-items:center;justify-content:center;background:url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=450&fit=crop&q=80') center/cover}
+.yt-facade::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.4)}
+.yt-play{position:relative;z-index:1;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;transition:transform .2s;box-shadow:0 4px 24px rgba(0,0,0,.3)}
+.yt-play:hover{transform:scale(1.1)}.yt-play svg{margin-left:4px}
+.yt-facade .yt-label{position:absolute;bottom:20px;left:20px;color:#fff;font-size:.88rem;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.yt-container iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:none}
+.yt-container.playing .yt-facade{display:none}.yt-container.playing iframe{display:block}
+.vp-item{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
+.vp-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.vp-text h4{color:var(--gold);font-size:.95rem;font-weight:700;margin-bottom:4px}.vp-text p{color:rgba(255,255,255,.72);font-size:.875rem;line-height:1.6}
+#problem{background:var(--gray-light)}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:48px}
+.problem-card{background:#fff;border-radius:var(--radius);padding:26px 22px;box-shadow:var(--shadow);border-left:4px solid var(--blue-mid)}
+.problem-icon{font-size:1.7rem;margin-bottom:10px}.problem-card h3{font-size:.95rem;font-weight:700;color:var(--blue-dark);margin-bottom:7px}.problem-card p{font-size:.875rem;color:var(--gray)}
+#mission{background:var(--blue-dark)}
+#mission .sec-tag{color:var(--gold)}#mission .sec-title{color:#fff}#mission .sec-desc{color:rgba(255,255,255,.75)}
+.mission-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:48px}
+.mc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:26px 20px;transition:background .2s}.mc:hover{background:rgba(255,255,255,.12)}
+.mc-icon{font-size:1.9rem;margin-bottom:12px}.mc h3{color:var(--gold);font-size:.95rem;font-weight:700;margin-bottom:8px}.mc p{color:rgba(255,255,255,.72);font-size:.86rem}
+#program{background:#fff}
+.program-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:48px}
+.track-card{border-radius:var(--radius);padding:26px 20px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.track-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.track-a{background:#EEF4FB}.track-a::before{background:var(--blue-mid)}
+.track-b{background:#FFF8EE}.track-b::before{background:var(--gold)}
+.track-c{background:#F0FAF4}.track-c::before{background:#2E8B57}
+.track-d{background:#F7F0FB}.track-d::before{background:#7B4FAB}
+.track-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.track-a .track-label{color:var(--blue-mid)}.track-b .track-label{color:var(--gold)}.track-c .track-label{color:#2E8B57}.track-d .track-label{color:#7B4FAB}
+.track-card h3{font-size:1rem;font-weight:700;color:var(--blue-dark);margin-bottom:8px}
+.track-card ul{list-style:none}.track-card ul li{font-size:.86rem;color:var(--gray);padding:3px 0}.track-card ul li::before{content:'→ ';opacity:.6}
+#timeline-sec{background:var(--gray-light)}
+.timeline{margin-top:48px;position:relative}.timeline::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;background:var(--blue-light)}
+.tl-item{display:flex;gap:22px;margin-bottom:28px;position:relative}
+.tl-dot{width:48px;height:48px;border-radius:50%;background:var(--blue-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0;position:relative;z-index:1;box-shadow:0 0 0 4px var(--blue-light)}
+.tl-content{background:#fff;border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow);flex:1}
+.tl-date{font-size:.78rem;color:var(--blue-mid);font-weight:700;margin-bottom:3px}.tl-content h3{font-size:.95rem;font-weight:700;color:var(--blue-dark)}.tl-content p{font-size:.86rem;color:var(--gray);margin-top:3px}
+#join{background:#fff}
+.forms-wrap{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px}
+@media(max-width:768px){.forms-wrap{grid-template-columns:1fr}}
+.form-card{background:#fff;border-radius:var(--radius);padding:34px 28px;box-shadow:var(--shadow);border-top:5px solid var(--blue-dark)}
+.form-card.partner{border-top-color:var(--gold)}
+.form-card h2{font-size:1.25rem;font-weight:800;color:var(--blue-dark);margin-bottom:5px}
+.form-card.partner h2{color:#b8952e}
+.form-desc{font-size:.86rem;color:var(--gray);margin-bottom:22px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--blue-dark);margin-bottom:5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:1.5px solid #D0DFF0;border-radius:8px;font-size:.88rem;font-family:inherit;color:var(--gray-dark);transition:border-color .2s,box-shadow .2s;background:#FAFBFF}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue-mid);box-shadow:0 0 0 3px rgba(46,117,182,.12)}
+.form-group textarea{resize:vertical;min-height:85px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-check{display:flex;align-items:flex-start;gap:9px;margin:14px 0}
+.form-check input[type=checkbox]{width:15px;height:15px;margin-top:3px;flex-shrink:0;accent-color:var(--blue-mid)}
+.form-check label{font-size:.8rem;color:var(--gray);line-height:1.5}
+.form-check label a{color:var(--blue-mid);text-decoration:underline}
+.btn-submit{width:100%;padding:13px;background:var(--blue-dark);color:#fff;border:none;border-radius:8px;font-size:.92rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;font-family:inherit}
+.btn-submit:hover{background:var(--blue-mid);transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.form-card.partner .btn-submit{background:var(--gold);color:var(--blue-dark)}
+.form-card.partner .btn-submit:hover{background:#b8952e}
+.form-status{display:none;border-radius:8px;padding:14px 18px;font-weight:600;font-size:.88rem;text-align:center;margin-top:14px;white-space:pre-line}
+.form-status.success{background:#E2EFDA;border:1.5px solid #375623;color:#375623}
+.form-status.error{background:#FDECEA;border:1.5px solid #C00000;color:#C00000}
+.form-status.sending{background:#EEF4FB;border:1.5px solid var(--blue-mid);color:var(--blue-mid)}
+#faq{background:var(--gray-light)}
+.faq-list{margin-top:40px;display:flex;flex-direction:column;gap:10px}
+.faq-item{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.faq-q{padding:18px 22px;font-weight:700;font-size:.92rem;color:var(--blue-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.faq-q::after{content:'+';font-size:1.3rem;color:var(--blue-mid);transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{display:none;padding:14px 22px 18px;font-size:.875rem;color:var(--gray);border-top:1px solid var(--blue-light)}
+.faq-item.open .faq-a{display:block}
+footer{background:#0a1e30;color:rgba(255,255,255,.65);padding:56px 5% 30px}
+.footer-inner{max-width:1140px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
+@media(max-width:768px){.footer-top{grid-template-columns:1fr;gap:24px}}
+.footer-brand h3{color:#fff;font-size:1.1rem;font-weight:800;margin-bottom:8px}.footer-brand h3 span{color:var(--gold)}
+.footer-brand p{font-size:.86rem;line-height:1.7}
+.footer-col h4{color:#fff;font-size:.88rem;font-weight:700;margin-bottom:12px}
+.footer-col ul{list-style:none}.footer-col ul li{margin-bottom:7px}.footer-col ul li a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.86rem;transition:color .2s}.footer-col ul li a:hover{color:var(--gold)}
+.footer-divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin-bottom:22px}
+.footer-bottom{display:flex;justify-content:space-between;font-size:.78rem;flex-wrap:wrap;gap:10px}
+.footer-bottom a{color:rgba(255,255,255,.45);text-decoration:none}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1F4E79;color:#fff;padding:13px 26px;border-radius:8px;font-size:.875rem;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.25);transition:transform .35s ease;z-index:999;white-space:nowrap}
+#toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- ════ 로그인 화면 ════ -->
-<div id="loginWrap">
-  <div class="login-box">
-    <div class="login-logo">Next<span>Player</span></div>
-    <div class="login-sub">관리자 전용 대시보드</div>
-    <input type="password" id="pwInput" placeholder="관리자 비밀번호 입력" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">로그인</button>
-    <div class="login-err" id="loginErr">⚠️ 비밀번호가 올바르지 않습니다.</div>
+<nav>
+  <div class="nav-logo">Next<span>Player</span></div>
+  <div class="nav-links">
+    <a href="#sports">대상</a><a href="#journey">여정</a>
+    <a href="#video-section">영상</a><a href="#program">프로그램</a>
+    <a href="#join">참여</a><a href="#faq">FAQ</a>
   </div>
-</div>
+  <a href="#join" class="nav-cta">참여하기 →</a>
+</nav>
 
-<!-- ════ 대시보드 ════ -->
-<div id="dashboard">
-  <div class="topbar">
-    <div class="topbar-logo">Next<span>Player</span> <span style="font-size:.75rem;opacity:.7;font-weight:400;margin-left:8px">관리자</span></div>
-    <div class="topbar-right">
-      <span id="lastUpdate" style="opacity:.7"></span>
-      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
-    </div>
-  </div>
-
-  <div class="dash-inner">
-
-    <!-- 설정 안내 -->
-    <div class="setup-banner" id="setupBanner">
-      ⚙️ <strong>Apps Script URL 설정 필요</strong><br>
-      아래 <code>APPS_SCRIPT_URL</code> 값을 실제 배포 URL로 교체해야 데이터를 불러올 수 있습니다.<br>
-      또한 Apps Script에 <code>doGet</code> 함수가 추가되어 있어야 합니다. (아래 안내 참고)
-    </div>
-
-    <!-- 요약 카드 -->
-    <div class="summary-row">
-      <div class="sum-card"><div class="sum-label">선수 사전등록 총계</div><div class="sum-num" id="cnt_athlete">-</div></div>
-      <div class="sum-card gold"><div class="sum-label">기업 파트너 문의 총계</div><div class="sum-num" id="cnt_partner">-</div></div>
-      <div class="sum-card green"><div class="sum-label">오늘 신규 접수</div><div class="sum-num" id="cnt_today">-</div></div>
-      <div class="sum-card purple"><div class="sum-label">이번 주 신규 접수</div><div class="sum-num" id="cnt_week">-</div></div>
-    </div>
-
-    <!-- 탭 -->
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('athlete',this)">🏃 선수 사전등록</button>
-      <button class="tab-btn" onclick="switchTab('partner',this)">🤝 기업 파트너 문의</button>
-    </div>
-
-    <!-- 툴바 -->
-    <div class="toolbar">
-      <input class="search-box" id="searchBox" placeholder="이름·종목·회사 검색..." oninput="filterTable()">
-      <div style="display:flex;gap:8px">
-        <button class="btn-refresh" onclick="loadData()">↻ 새로고침</button>
-        <button class="btn-export" onclick="exportCSV()">⬇ CSV 내보내기</button>
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge">⚡ 사단법인 설립 추진 중 · 2026</div>
+      <h1 class="hero-title">선수의 도전은<br><em>은퇴 후에도</em><br>계속됩니다</h1>
+      <p class="hero-sub">연간 3,000명 이상의 엘리트 선수가 은퇴합니다.<br>그러나 이들을 위한 체계적 지원은 없습니다.<br>사단법인 <strong>넥스트플레이어</strong>가 함께합니다.</p>
+      <div class="hero-btns">
+        <a href="#join" class="btn-primary">🏃 선수 사전등록</a>
+        <a href="#join" class="btn-secondary">🤝 기업 파트너 문의</a>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="kakao-btn" onclick="shareKakao()">
+          <svg width="17" height="17" viewBox="0 0 18 18"><path d="M9 1.5C4.86 1.5 1.5 4.16 1.5 7.44c0 2.09 1.32 3.93 3.3 5.01l-.84 3.13a.28.28 0 0 0 .43.3L8.1 13.4c.29.03.59.04.9.04 4.14 0 7.5-2.66 7.5-5.94C16.5 4.16 13.14 1.5 9 1.5Z" fill="#3A1D1D"/></svg>
+          카카오톡 공유
+        </button>
+        <button class="copy-btn" onclick="copyLink()">🔗 링크 복사</button>
       </div>
     </div>
-
-    <!-- 선수 테이블 -->
-    <div id="athleteTab" class="table-wrap">
-      <div class="loading-msg">⏳ 데이터를 불러오는 중...</div>
+    <div class="hero-mosaic">
+      <div class="m-img"></div>
+      <div class="m-img"></div>
+      <div class="m-img"></div>
     </div>
-
-    <!-- 파트너 테이블 -->
-    <div id="partnerTab" class="table-wrap" style="display:none">
-      <div class="loading-msg">⏳ 데이터를 불러오는 중...</div>
-    </div>
-
   </div>
-</div>
+  <div class="share-bar">
+    <span class="share-bar-label">📣 주변 선수·관계자에게 알려주세요</span>
+    <button class="kakao-btn" onclick="shareKakao()">
+      <svg width="16" height="16" viewBox="0 0 18 18"><path d="M9 1.5C4.86 1.5 1.5 4.16 1.5 7.44c0 2.09 1.32 3.93 3.3 5.01l-.84 3.13a.28.28 0 0 0 .43.3L8.1 13.4c.29.03.59.04.9.04 4.14 0 7.5-2.66 7.5-5.94C16.5 4.16 13.14 1.5 9 1.5Z" fill="#3A1D1D"/></svg>
+      카카오톡 공유
+    </button>
+    <button class="copy-btn" onclick="copyLink()">🔗 링크 복사</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">3,000+</div><div class="lbl">연간 은퇴 선수 (추정)</div></div>
+    <div class="hero-stat"><div class="num">27세</div><div class="lbl">평균 은퇴 연령</div></div>
+    <div class="hero-stat"><div class="num">70%</div><div class="lbl">3년차 취업·창업 목표</div></div>
+    <div class="hero-stat"><div class="num">500명</div><div class="lbl">연간 수료 목표 (3년차)</div></div>
+  </div>
+</section>
 
-<script>
-// ══════════════════════════════════════════════════════════
-//  ⚙️  설정값 — 2가지만 수정하면 됩니다
-// ══════════════════════════════════════════════════════════
-
-// 1) 관리자 비밀번호 (원하는 값으로 변경)
-const ADMIN_PASSWORD = 'Hmg20022002';
-
-// 2) Apps Script 배포 URL (index.html 과 동일한 URL)
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylfuB44xXKwHls-k7leGXj_hSqBciOzjqQeqLrXtv3qUHTF7GZD5id5luYqDslAla2/exec';
-
-// ══════════════════════════════════════════════════════════
-
-let allAthletes = [];
-let allPartners = [];
-let currentTab  = 'athlete';
-
-// ── 로그인 ──────────────────────────────────────────────
-function doLogin() {
-  const pw = document.getElementById('pwInput').value;
-  if (pw === ADMIN_PASSWORD) {
-    document.getElementById('loginWrap').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    loadData();
-  } else {
-    document.getElementById('loginErr').style.display = 'block';
-    document.getElementById('pwInput').value = '';
-  }
-}
-
-function doLogout() {
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('loginWrap').style.display = 'flex';
-  document.getElementById('pwInput').value = '';
-}
-
-// ── 데이터 로드 ──────────────────────────────────────────
-async function loadData() {
-  setLoading('athlete'); setLoading('partner');
-
-  try {
-    // Apps Script GET 요청 (action=getdata)
-    const res = await fetch(APPS_SCRIPT_URL + '?action=getdata&pw=' + encodeURIComponent(ADMIN_PASSWORD));
-    const json = await res.json();
-
-    if (json.error) { showError('athlete', json.error); showError('partner', json.error); return; }
-
-    allAthletes = json.athlete || [];
-    allPartners = json.partner || [];
-
-    renderAthleteTable(allAthletes);
-    renderPartnerTable(allPartners);
-    updateSummary();
-    document.getElementById('lastUpdate').textContent = '최종 업데이트: ' + new Date().toLocaleTimeString('ko-KR');
-
-  } catch(err) {
-    // Apps Script URL 미설정이거나 doGet 함수가 없는 경우 → 샘플 데이터 표시
-    document.getElementById('setupBanner').style.display = 'block';
-    allAthletes = getSampleAthletes();
-    allPartners = getSamplePartners();
-    renderAthleteTable(allAthletes);
-    renderPartnerTable(allPartners);
-    updateSummary();
-    document.getElementById('lastUpdate').textContent = '⚠️ 샘플 데이터 (연동 필요)';
-  }
-}
-
-function setLoading(type) {
-  document.getElementById(type+'Tab').innerHTML = '<div class="loading-msg">⏳ 데이터를 불러오는 중...</div>';
-}
-function showError(type, msg) {
-  document.getElementById(type+'Tab').innerHTML = '<div class="error-msg">❌ ' + msg + '</div>';
-}
-
-// ── 선수 테이블 렌더링 ──────────────────────────────────
-function renderAthleteTable(data) {
-  const wrap = document.getElementById('athleteTab');
-  if (!data.length) { wrap.innerHTML = '<div class="empty-msg">📭 아직 등록된 선수가 없습니다.</div>'; return; }
-
-  const trackBadge = t => {
-    if (!t) return '';
-    const map = {'A':'badge-a','B':'badge-b','C':'badge-c','D':'badge-d'};
-    const key = Object.keys(map).find(k => t.startsWith(k)) || '';
-    return '<span class="badge '+(map[key]||'badge-a')+'">'+t+'</span>';
-  };
-
-  wrap.innerHTML = '<table class="data-table"><thead><tr>' +
-    '<th>제출시각</th><th>성함</th><th>연락처</th><th>이메일</th>' +
-    '<th>종목</th><th>선수경력</th><th>관심트랙</th><th>메시지</th>' +
-    '</tr></thead><tbody>' +
-    data.map(r => '<tr>' +
-      '<td>'+(r[0]||'-')+'</td>' +
-      '<td><strong>'+(r[1]||'-')+'</strong></td>' +
-      '<td>'+(r[2]||'-')+'</td>' +
-      '<td>'+(r[3]||'-')+'</td>' +
-      '<td>'+(r[4]||'-')+'</td>' +
-      '<td>'+(r[5]||'-')+'</td>' +
-      '<td>'+trackBadge(r[6])+'</td>' +
-      '<td style="max-width:200px;word-break:break-all">'+(r[7]||'-')+'</td>' +
-      '</tr>').join('') +
-    '</tbody></table>';
-}
-
-// ── 파트너 테이블 렌더링 ────────────────────────────────
-function renderPartnerTable(data) {
-  const wrap = document.getElementById('partnerTab');
-  if (!data.length) { wrap.innerHTML = '<div class="empty-msg">📭 아직 문의된 기업이 없습니다.</div>'; return; }
-
-  wrap.innerHTML = '<table class="data-table"><thead><tr>' +
-    '<th>제출시각</th><th>담당자</th><th>직책</th><th>회사명</th>' +
-    '<th>이메일</th><th>연락처</th><th>파트너십 유형</th><th>문의내용</th>' +
-    '</tr></thead><tbody>' +
-    data.map(r => '<tr>' +
-      '<td>'+(r[0]||'-')+'</td>' +
-      '<td><strong>'+(r[1]||'-')+'</strong></td>' +
-      '<td>'+(r[2]||'-')+'</td>' +
-      '<td><strong>'+(r[3]||'-')+'</strong></td>' +
-      '<td>'+(r[4]||'-')+'</td>' +
-      '<td>'+(r[5]||'-')+'</td>' +
-      '<td><span class="badge badge-b">'+(r[6]||'-')+'</span></td>' +
-      '<td style="max-width:200px;word-break:break-all">'+(r[7]||'-')+'</td>' +
-      '</tr>').join('') +
-    '</tbody></table>';
-}
-
-// ── 요약 카드 ────────────────────────────────────────────
-function updateSummary() {
-  document.getElementById('cnt_athlete').textContent = allAthletes.length;
-  document.getElementById('cnt_partner').textContent = allPartners.length;
-
-  const today = new Date().toLocaleDateString('ko-KR');
-  const weekAgo = new Date(Date.now() - 7*24*60*60*1000);
-
-  const todayCount = [...allAthletes, ...allPartners].filter(r => r[0] && r[0].startsWith(today.replace(/\. /g,'.').replace('.','-'))).length;
-  const weekCount  = [...allAthletes, ...allPartners].filter(r => {
-    if (!r[0]) return false;
-    try { return new Date(r[0]) >= weekAgo; } catch(e) { return false; }
-  }).length;
-
-  document.getElementById('cnt_today').textContent = todayCount;
-  document.getElementById('cnt_week').textContent  = weekCount;
-}
-
-// ── 탭 전환 ─────────────────────────────────────────────
-function switchTab(tab, btn) {
-  currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('athleteTab').style.display = tab === 'athlete' ? 'block' : 'none';
-  document.getElementById('partnerTab').style.display = tab === 'partner' ? 'block' : 'none';
-  document.getElementById('searchBox').value = '';
-}
-
-// ── 검색 필터 ────────────────────────────────────────────
-function filterTable() {
-  const q = document.getElementById('searchBox').value.toLowerCase();
-  const data = currentTab === 'athlete' ? allAthletes : allPartners;
-  const filtered = data.filter(r => r.some(cell => cell && String(cell).toLowerCase().includes(q)));
-  if (currentTab === 'athlete') renderAthleteTable(filtered);
-  else renderPartnerTable(filtered);
-}
-
-// ── CSV 내보내기 ─────────────────────────────────────────
-function exportCSV() {
-  const isAthlete = currentTab === 'athlete';
-  const header = isAthlete
-    ? ['제출시각','성함','연락처','이메일','종목','선수경력','관심트랙','메시지']
-    : ['제출시각','담당자','직책','회사명','이메일','연락처','파트너십유형','문의내용'];
-  const data = isAthlete ? allAthletes : allPartners;
-
-  const csv = '﻿' + [header, ...data].map(r => r.map(c => '"'+(c||'').toString().replace(/"/g,'""')+'"').join(',')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'nextplayer_' + currentTab + '_' + new Date().toISOString().slice(0,10) + '.csv';
-  a.click();
-}
-
-// ── 샘플 데이터 (연동 전 미리보기용) ────────────────────
-function getSampleAthletes() {
-  return [
-    ['2026. 6. 19. 오후 2:30', '김민준', '010-1234-5678', 'minjun@email.com', '축구', '은퇴 1년 이내', 'A. 스포츠·교육·코칭', '코치 자격증 취득에 관심 있습니다.'],
-    ['2026. 6. 19. 오후 3:10', '이서연', '010-9876-5432', 'seoyeon@email.com', '수영', '현역 (은퇴 준비 중)', 'B. 스포츠 비즈니스·미디어', ''],
-    ['2026. 6. 19. 오후 4:00', '박태준', '010-5555-1234', 'taejun@email.com', '태권도', '은퇴 3년 이상', 'C. 건강·웰니스·재활', 'PT 트레이너로 전환하고 싶습니다.'],
-  ];
-}
-function getSamplePartners() {
-  return [
-    ['2026. 6. 19. 오후 2:45', '홍길동', '인사팀 과장', '스포츠코리아(주)', 'hr@sportskorea.com', '02-1234-5678', 'Silver — 인턴십 협약 (연 200만원)', '인턴십 5명 채용 검토 중입니다.'],
-  ];
-}
-</script>
-
-<!--
-════════════════════════════════════════════════════════════
-  📋  Apps Script doGet 함수 추가 안내
-════════════════════════════════════════════════════════════
-
-  기존 Apps Script에 아래 함수를 추가해야 합니다.
-  (기존 doPost 함수 아래에 붙여넣기)
-
-─────────────────────────────────────────────────────────
-function doGet(e) {
-  const action = e.parameter.action;
-  const pw     = e.parameter.pw;
-
-  // 비밀번호 확인 (admin.html 의 ADMIN_PASSWORD 와 동일하게)
-  if (pw !== 'Hmg20022002') {
-    return ContentService
-      .createTextOutput(JSON.stringify({ error: '인증 실패' }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  if (action === 'getdata') {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-
-    const getSheet = name => {
-      const s = ss.getSheetByName(name);
-      if (!s || s.getLastRow() < 2) return [];
-      return s.getRange(2, 1, s.getLastRow()-1, 8).getValues();
-    };
-
-    const result = {
-      athlete: getSheet('선수등록'),
-      partner: getSheet('파트너문의')
-    };
-
-    return ContentService
-      .createTextOutput(JSON.stringify(result))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  return ContentService
-    .createTextOutput(JSON.stringify({ error: 'unknown action' }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-─────────────────────────────────────────────────────────
-
-  추가 후 → 배포 → 새 버전으로 배포(기존 배포 업데이트) 필요
-════════════════════════════════════════════════════════════
--->
-</body>
-</html>
+<section id="sports"><div class="sec-inner">
+  <div class="reveal">
+    <div class="sec-tag">누구를 위한 법인인가요</div>
+    <h2 class="sec-title">모든 종목의 엘리트 선수를 지원합니다</h2>
+    <p class="sec-desc">국가대표뿐 아니라 학원스포츠·실업팀·아마추어 엘리트 선수 모두가 대상입니다.</p>
+  </div>
+  <div class="sports-grid">
+    <div class="sport-card reveal"><div class="s-badge">인기 종목</div><div class="sport-img" style="background-image:url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=200&fit=crop&q=80')"></div><div class="sport-info"><h3>⚽ 축구</h3><p>K리그·세미프로·대학리그 은퇴 선수</p></div></div>
+    <div class="sport-card reveal"><div class="sport-img" style="background-image:url('https://images.unsplash.com/photo-1530549387789-4c1017266635?w=400&h=200&fit=crop&q=80')"></div><div class="sport-info"><h3>🏊 수영</h3><p>전국대회·실업 수영팀 은퇴 선수</p></div></div>
+    <div class="sport-card reveal"><div class="sport-img" style="background-image:url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=200&fit=crop&q=80')"></div><div class="sport-info"><h3>🏃 육상</h3><p>마라톤·단거리·트랙 종목 선수</p></div></div>
+    <div class="sport-card reveal"><div class="sport-img" style="background-image:url('https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=200&fit=crop&q=80')"></div><div class="sport-info"><h3>🏀 농구</h3><p>KBL·WKBL·대학 농구 은퇴 선수</p></div></div>
+    <div class="sport-card reveal"><div class="sport-img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop&q=80')"></div><div class="sport-info"><h3>🤸 체조·무도</h3><p>태권도·유도·씨름·체조 선수</p></div></div>
+    <div class="sport-card reveal"><div
